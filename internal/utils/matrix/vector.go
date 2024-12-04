@@ -15,6 +15,10 @@ func NewVector(values []int) Vector {
 	return Vector{values}
 }
 
+func NewEmptyVector(n int) Vector {
+return Vector{make([]int, n)}
+ }
+
 func ParseVector(line string) Vector {
 	parts := strings.Split(line, " ")
 	vector := make([]int, len(parts))
@@ -94,4 +98,24 @@ func (v *Vector) ToTextString() string {
 		runes[i] = rune(r)
 	}
 	return string(runes)
+}
+
+func (v *Vector) Equal(v2 Vector) bool {
+    return slices.Equal(v.Values, v2.Values)
+}
+
+func (v *Vector) Slice(start int, end int) Vector {
+    return NewVector(v.Values[start:end])
+}
+
+func (v *Vector) Set(position int, value int) {
+    v.Values[position] = value
+}
+
+func (v *Vector) Reduce(fn func(a int, b int) int, initial int) int {
+    result := initial
+    for _, value := range v.Values {
+        result = fn(result, value)
+    }
+    return result
 }

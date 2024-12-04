@@ -71,11 +71,11 @@ func (matrix *Matrix) Mirror() (*Matrix, error) {
 	return &Matrix{reversedRows}, nil
 }
 
-func (matrix *Matrix) Row(m int) (*Vector, error) {
-	if m < 0 || m >= len(matrix.Rows) {
+func (matrix *Matrix) Row(i int) (*Vector, error) {
+	if i < 0 || i >= len(matrix.Rows) {
 		return nil, errors.New("Invalid row index")
 	}
-	vector := NewVector(matrix.Rows[m].Values)
+	vector := NewVector(matrix.Rows[i].Values)
 	return &vector, nil
 }
 
@@ -140,4 +140,81 @@ func (matrix *Matrix) Get(i int, j int) (int, error) {
 	}
 
 	return matrix.Rows[i].Get(j), nil
+}
+
+func (matrix1 *Matrix) PatternMatch(matrix2 Matrix, mask Matrix) Matrix {
+	m1, n1 := matrix1.Size()
+	m2, n2 := matrix2.Size()
+
+    matrix2Masked := matrix2.Dot(mask)
+
+	result := make([]Vector, m1-m2+1)
+	for i := range len(result) {
+		result[i] = NewEmptyVector(n1 - n2 + 1)
+		for j := range result[i].Size() {
+			p := matrix1.SubMatrix(i, j, i+m2, j+n2)
+            pMasked := p.Dot(mask)
+
+			if pMasked.Equal(matrix2Masked) {
+				result[i].Set(j, 1)
+			} else {
+				result[i].Set(j, 0)
+			}
+
+		}
+	}
+	return NewMatrix(result)
+}
+
+func (matrix *Matrix) SubMatrix(iStart int, jStart int, iEnd int, jEnd int) Matrix {
+	result := make([]Vector, iEnd-iStart)
+	for i := range result {
+		row := matrix.Rows[iStart+i].Slice(jStart, jEnd)
+		result[i] = row
+	}
+	return NewMatrix(result)
+}
+
+func (matrix *Matrix) Equal(m Matrix) bool {
+	for i, row := range matrix.Rows {
+		mRow, _ := m.Row(i)
+		if !row.Equal(*mRow) {
+			return false
+		}
+	}
+	return true
+}
+
+func (matrix *Matrix) Dot(matrix2 Matrix) Matrix {
+	m, n := matrix.Size()
+
+	result := matrix.Clone()
+	for i := 0; i < m; i++ {
+		for j := 0; j < n; j++ {
+            val1, _  := matrix.Get(i, j)
+            val2, _ := matrix2.Get(i, j)
+			result.Set(i, j, val1 * val2)
+		}
+	}
+    return result
+}
+
+func (matrix *Matrix) Reduce(fn func(a int, b int) int, initial int) int {
+	result := initial
+	for _, row := range matrix.Rows {
+		result = row.Reduce(fn, result)
+	}
+	return result
+}
+
+func (matrix *Matrix) Clone() Matrix {
+	clone := make([]Vector, len(matrix.Rows))
+	for i := range clone {
+		clone[i] = matrix.Rows[i].Clone()
+	}
+	return NewMatrix(clone)
+}
+
+func (matrix *Matrix) Set(i int, j int, value int) {
+	matrix.Rows[i].Set(j, value)
 }
