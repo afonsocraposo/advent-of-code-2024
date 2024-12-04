@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/afonsocraposo/advent-of-code-2024/internal/utils/file-reader"
+	"github.com/afonsocraposo/advent-of-code-2024/internal/utils/filereader"
 )
 
 func Main() {

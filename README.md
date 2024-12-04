@@ -1,8 +1,8 @@
-# Advent of Code 2024 🎄✨  
+# Advent of Code 2024 🎄✨
 
 ```
    .     .       .  .   . .   .   . .    +  .
-     .     .  :     .    .. :. .___---------___.      
+     .     .  :     .    .. :. .___---------___.
           .  .   .    .  :.:. _".^ .^ ^.  '.. :"-_. .
        .  :       .  .  .:../:            . .^  :.:\.
            .   . :: +. :.:/: .   .    .        . . .:\
@@ -21,30 +21,30 @@
          .  :  .  .  .-:.":.::.\             ..:/
     .      -.   . . . .: .:::.:.\.           .:/
    .   .   .  :      : ....::_:..:\   ___.  :/
-      .   .  .   .:. .. .  .: :.:.:\       :/      
+      .   .  .   .:. .. .  .: :.:.:\       :/
          +   .   .   : . ::. :.:. .:.|\  .:/|
          .         +   .  .  ...:: ..|  --.:|\
- .      . . .   .  .  . ... :..:..:(  .:   ).:|   
-  .   .       .      :  .   .: ::/  . .::   : :\ 
-   .   .   .  .      .  .  .:: :.   .:::. . .:| 
+ .      . . .   .  .  . ... :..:..:(  .:   ).:|
+  .   .       .      :  .   .: ::/  . .::   : :\
+   .   .   .  .      .  .  .:: :.   .:::. . .:|
 ```
 
-Welcome to **Advent of Code 2024**! 🎅✨ This repo features my solutions to the daily programming puzzles, written in **Golang**, with a clean architecture for festive coding!  
+Welcome to **Advent of Code 2024**! 🎅✨ This repo features my solutions to the daily programming puzzles, written in **Golang**, with a clean architecture for festive coding!
 
 ---
 
-## Why Go? 🐹  
+## Why Go? 🐹
 
 - **Coolness**: I like Go and don't get the chance to use it on my day-to-day
-- **Speed**: No waiting around for Santa's sleigh.  
-- **Simplicity**: Go keeps the solutions straightforward and delightful.  
-- **Concurrency**: Perfect for parallelizing Santa's busy workshop tasks.  
+- **Speed**: No waiting around for Santa's sleigh.
+- **Simplicity**: Go keeps the solutions straightforward and delightful.
+- **Concurrency**: Perfect for parallelizing Santa's busy workshop tasks.
 
 ---
 
-## Repo Structure 📂  
+## Repo Structure 📂
 
-Here's how the magic is organized:  
+Here's how the magic is organized:
 
 ```
 .
@@ -57,8 +57,8 @@ Here's how the magic is organized:
 │   │   └── day1.go       # Solution logic for Day 1
 │   ├── day2
 │   │   └── day2.go       # Solution logic for Day 2
-│   └── utils       # Some utils to help 
-│       ├── file-reader
+│   └── utils       # Some utils to help
+│       ├── filereader
 │       │   └── filereader.go  # File parsing utilities
 │       ├── math
 │       │   └── math.go        # Math helpers
@@ -72,20 +72,20 @@ Here's how the magic is organized:
 
 ---
 
-## Running a Solution 🏃  
+## Running a Solution 🏃
 
-To solve the puzzles for a specific day, run the following command:  
+To solve the puzzles for a specific day, run the following command:
 
 ```bash
 go run cmd/main.go <day-number>
 ```
 
-### Example  
+### Example
 ```bash
 go run cmd/main.go 2
 ```
 
-### Output  
+### Output
 ```plaintext
 Advent of Code 2024
 DAY 2
@@ -97,13 +97,13 @@ The solution is: 290
 
 ---
 
-## Adding New Days 🗓️  
+## Adding New Days 🗓️
 
-1. Create a new directory under `internal` for the day:  
+1. Create a new directory under `internal` for the day:
    ```
    mkdir -p internal/day3
-   ```  
+   ```
 
-2. Write your solution in `internal/day3/day3.go`.  
+2. Write your solution in `internal/day3/day3.go`.
 
-3. Update `cmd/main.go` to include a case for the new day.  
+3. Update `cmd/main.go` to include a case for the new day.

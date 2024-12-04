@@ -4,7 +4,7 @@ import (
 	"log"
 	"math"
 
-	"github.com/afonsocraposo/advent-of-code-2024/internal/utils/file-reader"
+	"github.com/afonsocraposo/advent-of-code-2024/internal/utils/filereader"
 	"github.com/afonsocraposo/advent-of-code-2024/internal/utils/matrix"
 )
 
