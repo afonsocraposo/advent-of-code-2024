@@ -13,11 +13,11 @@ func NewMatrix(rows []Vector) Matrix {
 	return Matrix{rows}
 }
 
-func ParseMatrix(lines []string) Matrix {
+func ParseMatrix(lines []string, separator string) Matrix {
 	m := len(lines)
 	rows := make([]Vector, m)
 	for i, line := range lines {
-		rows[i] = ParseVector(line)
+		rows[i] = ParseVector(line, separator)
 	}
 	return NewMatrix(rows)
 }

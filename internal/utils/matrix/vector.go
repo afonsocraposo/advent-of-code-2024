@@ -16,11 +16,11 @@ func NewVector(values []int) Vector {
 }
 
 func NewEmptyVector(n int) Vector {
-return Vector{make([]int, n)}
- }
+	return Vector{make([]int, n)}
+}
 
-func ParseVector(line string) Vector {
-	parts := strings.Split(line, " ")
+func ParseVector(line string, separator string) Vector {
+	parts := strings.Split(line, separator)
 	vector := make([]int, len(parts))
 	for i, p := range parts {
 		n, err := strconv.Atoi(p)
@@ -83,7 +83,7 @@ func (v *Vector) Get(n int) int {
 }
 
 func (v *Vector) Clone() Vector {
-	return NewVector(append([]int{},v.Values...))
+	return NewVector(append([]int{}, v.Values...))
 }
 
 func (v *Vector) Reverse() Vector {
@@ -101,21 +101,21 @@ func (v *Vector) ToTextString() string {
 }
 
 func (v *Vector) Equal(v2 Vector) bool {
-    return slices.Equal(v.Values, v2.Values)
+	return slices.Equal(v.Values, v2.Values)
 }
 
 func (v *Vector) Slice(start int, end int) Vector {
-    return NewVector(v.Values[start:end])
+	return NewVector(v.Values[start:end])
 }
 
 func (v *Vector) Set(position int, value int) {
-    v.Values[position] = value
+	v.Values[position] = value
 }
 
 func (v *Vector) Reduce(fn func(a int, b int) int, initial int) int {
-    result := initial
-    for _, value := range v.Values {
-        result = fn(result, value)
-    }
-    return result
+	result := initial
+	for _, value := range v.Values {
+		result = fn(result, value)
+	}
+	return result
 }
