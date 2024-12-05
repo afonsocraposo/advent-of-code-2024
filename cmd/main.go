@@ -10,6 +10,7 @@ import (
 	"github.com/afonsocraposo/advent-of-code-2024/internal/day2"
 	"github.com/afonsocraposo/advent-of-code-2024/internal/day3"
 	"github.com/afonsocraposo/advent-of-code-2024/internal/day4"
+	"github.com/afonsocraposo/advent-of-code-2024/internal/day5"
 )
 
 var days = map[int]func(){
@@ -17,6 +18,7 @@ var days = map[int]func(){
 	2: day2.Main,
 	3: day3.Main,
 	4: day4.Main,
+	5: day5.Main,
 }
 
 func main() {
