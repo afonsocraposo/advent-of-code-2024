@@ -13,6 +13,14 @@ func NewMatrix(rows []Vector) Matrix {
 	return Matrix{rows}
 }
 
+func NewEmptyMatrix(m int, n int) Matrix {
+    rows := make([]Vector, m)
+    for i := range rows {
+        rows[i] = NewEmptyVector(n)
+    }
+    return NewMatrix(rows)
+}
+
 func ParseMatrix(lines []string, separator string) Matrix {
 	m := len(lines)
 	rows := make([]Vector, m)
@@ -217,4 +225,10 @@ func (matrix *Matrix) Clone() Matrix {
 
 func (matrix *Matrix) Set(i int, j int, value int) {
 	matrix.Rows[i].Set(j, value)
+}
+
+func (matrix *Matrix) PrintText() {
+    for _, row := range matrix.Rows{
+        fmt.Println(row.ToTextString())
+    }
 }
