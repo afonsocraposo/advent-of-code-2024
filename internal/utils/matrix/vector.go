@@ -1,7 +1,6 @@
 package matrix
 
 import (
-	"log"
 	"slices"
 	"strconv"
 	"strings"
@@ -19,17 +18,17 @@ func NewEmptyVector(n int) Vector {
 	return Vector{make([]int, n)}
 }
 
-func ParseVector(line string, separator string) Vector {
+func ParseVector(line string, separator string) (Vector, error) {
 	parts := strings.Split(line, separator)
 	vector := make([]int, len(parts))
 	for i, p := range parts {
 		n, err := strconv.Atoi(p)
 		if err != nil {
-			log.Fatalln(err)
+			return NewEmptyVector(0), err
 		}
 		vector[i] = n
 	}
-	return VectorFromSlice(vector)
+	return VectorFromSlice(vector), nil
 }
 
 func ParseRuneVector(line string) Vector {

@@ -112,7 +112,10 @@ func part2() {
 
 	mx := matrix.ParseRuneMatrix(lines)
 
-	maskMatrix := matrix.ParseMatrix(mask, " ")
+	maskMatrix, err := matrix.ParseMatrix(mask, " ")
+    if err != nil {
+        log.Fatalln(err)
+    }
 
 	solution := 0
 	for _, kPattern := range xmas {

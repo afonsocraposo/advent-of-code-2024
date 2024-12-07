@@ -21,13 +21,17 @@ func NewEmptyMatrix(m int, n int) Matrix {
     return NewMatrix(rows)
 }
 
-func ParseMatrix(lines []string, separator string) Matrix {
+func ParseMatrix(lines []string, separator string) (Matrix, error) {
 	m := len(lines)
 	rows := make([]Vector, m)
 	for i, line := range lines {
-		rows[i] = ParseVector(line, separator)
+        var err error
+        rows[i], err = ParseVector(line, separator)
+        if err != nil {
+            return NewEmptyMatrix(0, 0), err
+        }
 	}
-	return NewMatrix(rows)
+	return NewMatrix(rows), nil
 }
 
 func ParseRuneMatrix(lines []string) Matrix {

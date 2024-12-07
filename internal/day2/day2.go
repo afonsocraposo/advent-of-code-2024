@@ -27,7 +27,10 @@ func part1() {
 			log.Fatalln(err)
 		}
 
-		report := matrix.ParseVector(line, " ")
+		report, err := matrix.ParseVector(line, " ")
+        if err != nil {
+            log.Fatalln(err)
+        }
 
         if !checkReport(report) {
             continue
@@ -48,7 +51,10 @@ func part2() {
 			log.Fatalln(err)
 		}
 
-		report := matrix.ParseVector(line, " ")
+		report, err := matrix.ParseVector(line, " ")
+        if err != nil {
+            log.Fatalln(err)
+        }
         if checkReport(report) {
             safeReports++
             continue

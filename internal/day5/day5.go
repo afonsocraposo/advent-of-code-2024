@@ -57,7 +57,10 @@ func part1() {
 			}
 			instructions = append(instructions, rule{number1, number2})
 		} else {
-			update := matrix.ParseVector(line, ",")
+			update, err := matrix.ParseVector(line, ",")
+			if err != nil {
+				log.Fatalln(err)
+			}
 
 			valid := true
 			for _, instruction := range instructions {
@@ -110,18 +113,21 @@ func part2() {
 			}
 			instructions = append(instructions, rule{number1, number2})
 		} else {
-			update := matrix.ParseVector(line, ",")
+			update, err := matrix.ParseVector(line, ",")
+			if err != nil {
+				log.Fatalln(err)
+			}
 
-            add := false
+			add := false
 			for true {
-                valid := true
+				valid := true
 				for _, instruction := range instructions {
 					lastIndex := slices.Index(update.Values, instruction.Last)
 					if lastIndex != -1 {
 						firstIndex := slices.Index(update.Values, instruction.First)
 						if firstIndex != -1 && firstIndex > lastIndex {
 							valid = false
-                            add = true
+							add = true
 
 							first := update.Get(firstIndex)
 							last := update.Get(lastIndex)
@@ -133,9 +139,9 @@ func part2() {
 					}
 
 				}
-                if valid {
-                    break
-                }
+				if valid {
+					break
+				}
 			}
 			if add {
 				solution = solution + update.Get(update.Size()/2)
