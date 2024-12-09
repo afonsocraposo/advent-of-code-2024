@@ -10,8 +10,8 @@ func (p *Point) InsideBounds(iMin int, jMin int, iMax int, jMax int) bool {
 }
 
 func (p *Point) Sum(p2 Point) {
-    p.I = p.I + p2.I
-    p.J = p.J + p2.J
+	p.I = p.I + p2.I
+	p.J = p.J + p2.J
 }
 
 type Direction Point
@@ -22,3 +22,9 @@ var (
 	DOWN  = Direction{1, 0}
 	LEFT  = Direction{0, -1}
 )
+
+func (p *Point) Distance(p2 Point) Point {
+	i := p2.I - p.I
+	j := p2.J - p.J
+	return Point{I: i, J: j}
+}

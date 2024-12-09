@@ -14,22 +14,22 @@ func NewMatrix(rows []Vector) Matrix {
 }
 
 func NewEmptyMatrix(m int, n int) Matrix {
-    rows := make([]Vector, m)
-    for i := range rows {
-        rows[i] = NewEmptyVector(n)
-    }
-    return NewMatrix(rows)
+	rows := make([]Vector, m)
+	for i := range rows {
+		rows[i] = NewEmptyVector(n)
+	}
+	return NewMatrix(rows)
 }
 
 func ParseMatrix(lines []string, separator string) (Matrix, error) {
 	m := len(lines)
 	rows := make([]Vector, m)
 	for i, line := range lines {
-        var err error
-        rows[i], err = ParseVector(line, separator)
-        if err != nil {
-            return NewEmptyMatrix(0, 0), err
-        }
+		var err error
+		rows[i], err = ParseVector(line, separator)
+		if err != nil {
+			return NewEmptyMatrix(0, 0), err
+		}
 	}
 	return NewMatrix(rows), nil
 }
@@ -158,14 +158,14 @@ func (matrix1 *Matrix) PatternMatch(matrix2 Matrix, mask Matrix) Matrix {
 	m1, n1 := matrix1.Size()
 	m2, n2 := matrix2.Size()
 
-    matrix2Masked := matrix2.Dot(mask)
+	matrix2Masked := matrix2.Dot(mask)
 
 	result := make([]Vector, m1-m2+1)
 	for i := range len(result) {
 		result[i] = NewEmptyVector(n1 - n2 + 1)
 		for j := range result[i].Size() {
 			p := matrix1.SubMatrix(i, j, i+m2, j+n2)
-            pMasked := p.Dot(mask)
+			pMasked := p.Dot(mask)
 
 			if pMasked.Equal(matrix2Masked) {
 				result[i].Set(j, 1)
@@ -203,12 +203,12 @@ func (matrix *Matrix) Dot(matrix2 Matrix) Matrix {
 	result := matrix.Clone()
 	for i := 0; i < m; i++ {
 		for j := 0; j < n; j++ {
-            val1, _  := matrix.Get(i, j)
-            val2, _ := matrix2.Get(i, j)
-			result.Set(i, j, val1 * val2)
+			val1, _ := matrix.Get(i, j)
+			val2, _ := matrix2.Get(i, j)
+			result.Set(i, j, val1*val2)
 		}
 	}
-    return result
+	return result
 }
 
 func (matrix *Matrix) Reduce(fn func(a int, b int) int, initial int) int {
@@ -232,7 +232,14 @@ func (matrix *Matrix) Set(i int, j int, value int) {
 }
 
 func (matrix *Matrix) PrintText() {
-    for _, row := range matrix.Rows{
-        fmt.Println(row.ToTextString())
-    }
+	for _, row := range matrix.Rows {
+		fmt.Println(row.ToTextString())
+	}
+}
+
+func (matrix *Matrix) PrintValues() {
+	for _, row := range matrix.Rows {
+		row.PrintValues()
+		fmt.Print("\n")
+	}
 }

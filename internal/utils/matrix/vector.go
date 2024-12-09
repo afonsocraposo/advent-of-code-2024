@@ -1,6 +1,7 @@
 package matrix
 
 import (
+	"fmt"
 	"slices"
 	"strconv"
 	"strings"
@@ -97,6 +98,15 @@ func (v *Vector) ToTextString() string {
 		runes[i] = rune(r)
 	}
 	return string(runes)
+}
+
+func (v *Vector) PrintValues() {
+	for i, value := range v.Values {
+		fmt.Printf("%d",value)
+		if i != len(v.Values)-1 {
+			fmt.Print(" ")
+		}
+	}
 }
 
 func (v *Vector) Equal(v2 Vector) bool {
