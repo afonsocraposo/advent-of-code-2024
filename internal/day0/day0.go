@@ -16,7 +16,7 @@ func Main() {
 }
 
 func part1() {
-	f := filereader.NewFromDayExample(1, 1)
+	f := filereader.NewFromDayExample(0, 1)
 	lines := []string{}
 	for f.HasMore() {
 		line, _, err := f.Read()
@@ -32,7 +32,7 @@ func part1() {
 }
 
 func part2() {
-	f := filereader.NewFromDayExample(1, 1)
+	f := filereader.NewFromDayExample(0, 1)
 	lines := []string{}
 	for f.HasMore() {
 		line, _, err := f.Read()
