@@ -23,6 +23,8 @@ var (
 	LEFT  = Direction{0, -1}
 )
 
+var DIRECTIONS = []Direction{UP, RIGHT, DOWN, LEFT}
+
 func (p *Point) Distance(p2 Point) Point {
 	i := p2.I - p.I
 	j := p2.J - p.J

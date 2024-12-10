@@ -20,16 +20,29 @@ func NewEmptyVector(n int) Vector {
 }
 
 func ParseVector(line string, separator string) (Vector, error) {
-	parts := strings.Split(line, separator)
-	vector := make([]int, len(parts))
-	for i, p := range parts {
-		n, err := strconv.Atoi(p)
-		if err != nil {
-			return NewEmptyVector(0), err
+	if separator == "" {
+		vector := make([]int, len(line))
+		for i, p := range line {
+			n, err := strconv.Atoi(string(p))
+			if err != nil {
+                vector[i] = -1
+                continue
+			}
+			vector[i] = n
 		}
-		vector[i] = n
+		return VectorFromSlice(vector), nil
+	} else {
+		parts := strings.Split(line, separator)
+		vector := make([]int, len(parts))
+		for i, p := range parts {
+			n, err := strconv.Atoi(p)
+			if err != nil {
+				return NewEmptyVector(0), err
+			}
+			vector[i] = n
+		}
+		return VectorFromSlice(vector), nil
 	}
-	return VectorFromSlice(vector), nil
 }
 
 func ParseRuneVector(line string) Vector {
@@ -102,7 +115,7 @@ func (v *Vector) ToTextString() string {
 
 func (v *Vector) PrintValues() {
 	for i, value := range v.Values {
-		fmt.Printf("%d",value)
+		fmt.Printf("%d", value)
 		if i != len(v.Values)-1 {
 			fmt.Print(" ")
 		}
