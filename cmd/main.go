@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/afonsocraposo/advent-of-code-2024/internal/day11"
+	"github.com/afonsocraposo/advent-of-code-2024/internal/day12"
 	"log"
 	"os"
 	"strconv"
@@ -20,6 +21,7 @@ import (
 )
 
 var days = map[int]func(){
+	12: day12.Main,
 	11: day11.Main,
 	1:  day1.Main,
 	2:  day2.Main,

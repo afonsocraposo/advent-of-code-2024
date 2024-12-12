@@ -14,6 +14,10 @@ func (p *Point) Sum(p2 Point) {
 	p.J = p.J + p2.J
 }
 
+func (p *Point) SumNew(p2 Point) Point {
+    return Point{I:p.I + p2.I,J:p.J + p2.J}
+}
+
 type Direction Point
 
 var (
@@ -21,9 +25,14 @@ var (
 	RIGHT = Direction{0, 1}
 	DOWN  = Direction{1, 0}
 	LEFT  = Direction{0, -1}
+	TL    = Direction{-1, -1}
+	TR    = Direction{-1, 1}
+	BL    = Direction{1, -1}
+	BR    = Direction{1, 1}
 )
 
 var DIRECTIONS = []Direction{UP, RIGHT, DOWN, LEFT}
+var DIRECTIONS9 = []Direction{UP, RIGHT, DOWN, LEFT, TL, TR, BL, BR}
 
 func (p *Point) Distance(p2 Point) Point {
 	i := p2.I - p.I
