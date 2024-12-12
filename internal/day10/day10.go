@@ -2,7 +2,6 @@ package day10
 
 import (
 	"log"
-	"slices"
 
 	"github.com/afonsocraposo/advent-of-code-2024/internal/utils/filereader"
 	"github.com/afonsocraposo/advent-of-code-2024/internal/utils/matrix"
