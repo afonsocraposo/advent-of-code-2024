@@ -23,6 +23,13 @@ type Corner struct {
 	CornerType CornerType
 }
 
+// ConvexTL - corner on bottom right A
+// ?B
+// BA
+//
+// ConcaveTL - corner on bottom right A
+// BA
+// AA
 func GetCorners(mat matrix.Matrix, region []point.Point) []Corner {
 	corners := []Corner{}
 	for _, p := range region {
