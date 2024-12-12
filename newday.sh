@@ -11,10 +11,14 @@ year=$(date +"%Y")
 # Create necessary directories
 mkdir -p "internal/day$DAY" "puzzles/day$DAY"
 
+# check if the day already exists
+ALREADY_EXISTS=$(ls -d internal/day$DAY 2>/dev/null)
+
 # Create files with safety checks
 touch "internal/day$DAY/day${DAY}.go" "puzzles/day$DAY/example1.txt" "puzzles/day$DAY/input1.txt"
 
-# Populate the Go file with a template
+# Populate the Go file with a template if it doesn't exist
+if [ -z "$ALREADY_EXISTS" ]; then
 cat > "internal/day$DAY/day${DAY}.go" << EOM
 package day$DAY
 
@@ -65,6 +69,7 @@ func part2() {
 	log.Println("The solution is:", solution)
 }
 EOM
+fi
 
 # Format the Go file
 gofmt -w "internal/day$DAY/day${DAY}.go"
