@@ -21,7 +21,7 @@ func Main() {
 }
 
 func computeSolution(ax, ay, bx, by, x, y float64) (float64, float64) {
-	b := (y - ay*x/ax) / (by - ay*bx/ax)
+	b := (ax*y - ay*x) / (ax*by - ay*bx)
 	a := (x - bx*b) / ax
 	return a, b
 }
@@ -85,17 +85,62 @@ func part1() {
 }
 
 func part2() {
-	f := filereader.NewFromDayExample(13, 1)
-	lines := []string{}
+	f := filereader.NewFromDayInput(13, 1)
+	i := 0
+    solution := 0
+	var ax, ay, bx, by, x, y float64
 	for f.HasMore() {
 		line, _, err := f.Read()
 		if err != nil {
 			log.Fatalln(err)
 		}
 
-		lines = append(lines, line)
+		n := i % 4
+		switch n {
+		case 0:
+			buttonPattern := regexp.MustCompile(`\d+`)
+			matches := buttonPattern.FindAllString(line, -1)
+			ax, err = strconv.ParseFloat(matches[0], 64)
+			if err != nil {
+				log.Fatalln(err)
+			}
+			ay, err = strconv.ParseFloat(matches[1], 64)
+			if err != nil {
+				log.Fatalln(err)
+			}
+		case 1:
+			buttonPattern := regexp.MustCompile(`\d+`)
+			matches := buttonPattern.FindAllString(line, -1)
+			bx, err = strconv.ParseFloat(matches[0], 64)
+			if err != nil {
+				log.Fatalln(err)
+			}
+			by, err = strconv.ParseFloat(matches[1], 64)
+			if err != nil {
+				log.Fatalln(err)
+			}
+		case 2:
+			prizePattern := regexp.MustCompile(`\d+`)
+			matches := prizePattern.FindAllString(line, -1)
+			x, err = strconv.ParseFloat(matches[0], 64)
+			if err != nil {
+				log.Fatalln(err)
+			}
+			y, err = strconv.ParseFloat(matches[1], 64)
+			if err != nil {
+				log.Fatalln(err)
+			}
+
+            x+=10000000000000
+            y+=10000000000000
+
+			a, b := computeSolution(ax, ay, bx, by, x, y)
+            if numbers.IsInt(a) && numbers.IsInt(b) {
+                solution += int(math.Round(a))*3 + int(math.Round(b))
+            }
+		}
+		i++
 	}
 
-	solution := 0
 	log.Println("The solution is:", solution)
 }
