@@ -69,7 +69,7 @@ func part2() {
 	log.Println("The solution is:", solution)
 }
 EOM
-#
+
 # Format the Go file
 gofmt -w "internal/day$DAY/day${DAY}.go"
 fi

@@ -1,7 +1,6 @@
 package algorithms
 
 import (
-
 	"github.com/afonsocraposo/advent-of-code-2024/internal/utils/matrix"
 	"github.com/afonsocraposo/advent-of-code-2024/internal/utils/point"
 )
@@ -32,7 +31,7 @@ func FloodFill(mat matrix.Matrix, start point.Point) []point.Point {
 			}
 
 			region[p] = true
-            queue = append(queue, p)
+			queue = append(queue, p)
 		}
 	}
 	result := []point.Point{}

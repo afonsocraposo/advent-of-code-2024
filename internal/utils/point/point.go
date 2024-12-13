@@ -15,7 +15,7 @@ func (p *Point) Sum(p2 Point) {
 }
 
 func (p *Point) SumNew(p2 Point) Point {
-    return Point{I:p.I + p2.I,J:p.J + p2.J}
+	return Point{I: p.I + p2.I, J: p.J + p2.J}
 }
 
 type Direction Point
