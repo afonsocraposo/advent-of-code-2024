@@ -12,7 +12,7 @@ year=$(date +"%Y")
 mkdir -p "internal/day$DAY" "puzzles/day$DAY"
 
 # check if the day already exists
-ALREADY_EXISTS=$(ls -d internal/day$DAY 2>/dev/null)
+ALREADY_EXISTS=$(ls internal/day$DAY 2>/dev/null)
 
 # Create files with safety checks
 touch "internal/day$DAY/day${DAY}.go" "puzzles/day$DAY/example1.txt" "puzzles/day$DAY/input1.txt"
@@ -69,10 +69,11 @@ func part2() {
 	log.Println("The solution is:", solution)
 }
 EOM
-fi
-
+#
 # Format the Go file
 gofmt -w "internal/day$DAY/day${DAY}.go"
+fi
+
 
 # Update cmd/main.go
 MAIN_FILE="cmd/main.go"
