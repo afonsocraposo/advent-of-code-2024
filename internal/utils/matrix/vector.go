@@ -19,14 +19,22 @@ func NewEmptyVector(n int) Vector {
 	return Vector{make([]int, n)}
 }
 
+func NewVectorWithValue(n, value int) Vector {
+    v := make([]int, n)
+    for i := range v {
+        v[i] = value
+    }
+	return Vector{v}
+}
+
 func ParseVector(line string, separator string) (Vector, error) {
 	if separator == "" {
 		vector := make([]int, len(line))
 		for i, p := range line {
 			n, err := strconv.Atoi(string(p))
 			if err != nil {
-                vector[i] = -1
-                continue
+				vector[i] = -1
+				continue
 			}
 			vector[i] = n
 		}
@@ -113,13 +121,20 @@ func (v *Vector) ToTextString() string {
 	return string(runes)
 }
 
-func (v *Vector) PrintValues() {
-	for i, value := range v.Values {
-		fmt.Printf("%d", value)
-		if i != len(v.Values)-1 {
-			fmt.Print(" ")
+func (v *Vector) ToValuesString() string {
+	str := ""
+	for i, r := range v.Values {
+		str += fmt.Sprintf("%d", r)
+		if i < len(v.Values)-1 {
+			str += " "
 		}
 	}
+	return str
+}
+
+func (v *Vector) PrintValues() {
+    str := v.ToValuesString()
+    fmt.Println(str)
 }
 
 func (v *Vector) Equal(v2 Vector) bool {

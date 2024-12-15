@@ -13,6 +13,14 @@ func NewMatrix(rows []Vector) Matrix {
 	return Matrix{rows}
 }
 
+func NewMatrixWithValue(m, n, value int) Matrix {
+	rows := make([]Vector, m)
+	for i := range rows {
+		rows[i] = NewVectorWithValue(n, value)
+	}
+	return NewMatrix(rows)
+}
+
 func NewEmptyMatrix(m int, n int) Matrix {
 	rows := make([]Vector, m)
 	for i := range rows {
