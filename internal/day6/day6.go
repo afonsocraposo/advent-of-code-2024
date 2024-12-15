@@ -60,7 +60,7 @@ func printMatrix(mat matrix.Matrix, redraw bool) {
 			printRow(n + 2)
 		}
 		fmt.Printf("|%s|\n", vector.ToTextString())
-		if i == n-1 {
+		if i == m-1 {
 			printRow(n + 2)
 		}
 	}
