@@ -1,11 +1,10 @@
 package animation
 
 import (
-	"bufio"
 	"fmt"
-	"os"
 	"time"
 
+	"github.com/afonsocraposo/advent-of-code-2024/internal/utils"
 	"github.com/afonsocraposo/advent-of-code-2024/internal/utils/matrix"
 )
 
@@ -16,22 +15,9 @@ func printLine(n int) {
 	fmt.Print("\n")
 }
 
-// waitForKeyPress waits until the user presses Enter or Spacebar
-func waitForKeyPress() {
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Print("Press Enter or Spacebar to continue...")
-	for {
-		input, _ := reader.ReadByte()
-		if input == '\n' || input == ' ' { // Check for Enter or Space
-			break
-		}
-	}
-	fmt.Print("\033[F\033[K") // Clear the "Press Enter" message
-}
-
 func handleAnimation(framerate int) {
 	if framerate == 0 {
-		waitForKeyPress()
+		utils.WaitForKeyPress()
 	} else {
 		time.Sleep(time.Duration(1000.0 / float64(framerate) * float64(time.Millisecond)))
 	}

@@ -15,3 +15,10 @@ func IntPow(n, m int) int {
     }
     return result
 }
+
+func IntMin(a, b int) int {
+    if a < b {
+        return a
+    }
+    return b
+}
