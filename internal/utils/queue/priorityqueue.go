@@ -7,14 +7,13 @@ type PriorityQueue struct {
 func (q *PriorityQueue) Push(newEl PriorityQueueElement) {
 	for i, el := range q.Queue {
 		if newEl.Value() <= el.Value() {
-            // Insert the new element in the correct position
+			// Insert the new element in the correct position
 			q.Queue = append(q.Queue[:i], append([]PriorityQueueElement{newEl}, q.Queue[i:]...)...)
-            return
+			return
 		}
 	}
-    	// If we get here, the new element has the lowest priority, so add it to the end
-
-    q.Queue = append(q.Queue, newEl)
+	// If we get here, the new element has the lowest priority, so add it to the end
+	q.Queue = append(q.Queue, newEl)
 }
 
 func (q *PriorityQueue) Len() int {
