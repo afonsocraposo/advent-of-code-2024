@@ -18,6 +18,10 @@ func (p *Point) SumNew(p2 Point) Point {
 	return Point{I: p.I + p2.I, J: p.J + p2.J}
 }
 
+func (p *Point) Clone() Point {
+	return Point{I: p.I, J: p.J}
+}
+
 func (p *Point) Equal(p2 Point) bool {
     return p.I == p2.I && p.J == p2.J
 }

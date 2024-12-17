@@ -36,12 +36,12 @@ func (el priorityQueueElement) Value() int {
 	return el.value
 }
 
-func costsHash(position point.Point, direction point.Direction) string {
-	return fmt.Sprintf("%d:%d:%d:%d", position.I, position.J, direction.I, direction.J)
+func positionHash(position point.Point) string {
+	return fmt.Sprintf("%d:%d", position.I, position.J)
 }
 
-func parentHash(position point.Point) string {
-	return fmt.Sprintf("%d:%d", position.I, position.J)
+func positionDirectionHash(position point.Point, direction point.Direction) string {
+	return fmt.Sprintf("%d:%d:%d:%d", position.I, position.J, direction.I, direction.J)
 }
 
 func getRotateCount(oldDir point.Direction, newDir point.Direction) int {
@@ -55,8 +55,8 @@ func getRotateCount(oldDir point.Direction, newDir point.Direction) int {
 	n := dirs[newDir]
 	o := dirs[oldDir]
 
-    diff := (n - o + 4) % 4       // Clockwise difference
-    return numbers.IntMin(diff, 4-diff)      // Return the minimum of clockwise and counter-clockwise rotations
+	diff := (n - o + 4) % 4             // Clockwise difference
+	return numbers.IntMin(diff, 4-diff) // Return the minimum of clockwise and counter-clockwise rotations
 }
 
 func reconstructPath(parent map[string]*point.Point, goal point.Point) []point.Point {
@@ -64,7 +64,7 @@ func reconstructPath(parent map[string]*point.Point, goal point.Point) []point.P
 	current := &goal
 	for current != nil {
 		path = append(path, *current)
-		current = parent[parentHash(*current)]
+		current = parent[positionHash(*current)]
 	}
 	return path
 }
@@ -87,10 +87,10 @@ func part1() {
 		0, start, r.Direction,
 	})
 	costs := map[string]int{
-		costsHash(start, r.Direction): 0,
+		positionHash(start): 0,
 	}
 	parent := map[string]*point.Point{
-		parentHash(start): nil,
+		positionHash(start): nil,
 	}
 
 	solution := 0
@@ -121,13 +121,22 @@ func part1() {
 				continue
 			}
 			if v != int('#') {
+				// rotating has a cost of 1000. Moving forward costs 1
 				moveCost := 1 + 1000*getRotateCount(currentDirection, newDirection)
 				newCost := currentCost + moveCost
 
-				cost, found := costs[parentHash(newPos)]
+				path := reconstructPath(parent, currentPos)
+				mat2 := mat.Clone()
+				for _, p := range path {
+					mat2.Set(p.I, p.J, int('O'))
+				}
+				mat2.Set(newPos.I, newPos.J, int('O'))
+
+				h := positionHash(newPos)
+				cost, found := costs[h]
 				if !found || newCost < cost {
-					costs[parentHash(newPos)] = newCost
-					parent[parentHash(newPos)] = &currentPos
+					costs[h] = newCost
+					parent[h] = &currentPos
 					minHeap.Push(priorityQueueElement{newCost, newPos, newDirection})
 				}
 			}
@@ -136,18 +145,121 @@ func part1() {
 	log.Println("The solution is:", solution)
 }
 
-func part2() {
-	f := filereader.NewFromDayExample(16, 1)
-	lines := []string{}
-	for f.HasMore() {
-		line, _, err := f.Read()
-		if err != nil {
-			log.Fatalln(err)
+func reconstructPath2(parent map[string][]reindeer, goal point.Point, direction point.Direction, path []point.Point) []point.Point {
+	paths := []point.Point{}
+	paths = append(paths, goal)
+	parents, found := parent[positionDirectionHash(goal, direction)]
+	if !found {
+		return paths
+	}
+	for _, p := range parents {
+		contains := false
+		for _, v := range path {
+			if p.Position.Equal(v) {
+				contains = true
+				break
+			}
 		}
+		if !contains {
+			paths = append(paths, reconstructPath2(parent, p.Position, p.Direction, paths)...)
+		}
+	}
+	return paths
+}
 
-		lines = append(lines, line)
+func isSeat(count int, value int) int {
+	if value == 'O' {
+		count++
+	}
+	return count
+}
+
+func part2() {
+	f := filereader.NewFromDayInput(16, 1)
+	lines, err := f.ReadLines()
+	if err != nil {
+		log.Fatalln(err)
+	}
+	mat := matrix.ParseRuneMatrix(lines)
+
+	m, _ := mat.Size()
+	r := reindeer{Position: point.Point{I: m - 2, J: 1}, Direction: point.RIGHT}
+	start := r.Position
+	goal := start
+	goalDirection := point.UP
+
+	minHeap := queue.NewPriorityQueue()
+	minHeap.Push(priorityQueueElement{
+		0, start, r.Direction,
+	})
+	costs := map[string]int{
+		positionHash(start): 0,
+	}
+	parent := map[string][]reindeer{
+		positionHash(start): {},
 	}
 
-	solution := 0
+	for minHeap.Len() > 0 {
+		current := (*minHeap.Pop()).(priorityQueueElement)
+		currentCost := current.Value()
+		currentPos := current.Position
+		currentDirection := current.Direction
+
+		v, _ := mat.Get(currentPos.I, currentPos.J)
+		if v == int('E') {
+			goal = currentPos
+			goalDirection = currentDirection
+			break
+		}
+
+		for _, direction := range point.DIRECTIONS {
+			// if the direction is the same, move forward. if the direction is different, simply turn
+			newDirection := direction
+			var newPos point.Point
+			if newDirection == currentDirection {
+				newPos = currentPos.SumNew(point.Point(direction))
+				pd := point.Point(newDirection)
+				pd = pd.Symmetric()
+				if pd.Equal(point.Point(currentDirection)) {
+					continue
+				}
+			} else {
+				newPos = currentPos.Clone()
+			}
+
+			v, err := mat.Get(newPos.I, newPos.J)
+			if err != nil {
+				continue
+			}
+			if v != int('#') {
+				var moveCost int
+				// if the direction is the same, move forward. if the direction is different, simply turn
+				if newDirection == currentDirection {
+					moveCost = 1
+				} else {
+					moveCost = 1000*getRotateCount(currentDirection, newDirection)
+				}
+				newCost := currentCost + moveCost
+
+				pdh := positionDirectionHash(newPos, newDirection)
+				cost, found := costs[pdh]
+
+				if !found || newCost < cost {
+					costs[pdh] = newCost
+					minHeap.Push(priorityQueueElement{newCost, newPos, newDirection})
+					parent[pdh] = []reindeer{{currentPos, currentDirection}}
+				} else if newCost == cost {
+					parent[pdh] = append(parent[pdh], reindeer{currentPos, currentDirection})
+				}
+			}
+		}
+	}
+
+	paths := reconstructPath2(parent, goal, goalDirection, []point.Point{})
+	mat2 := mat.Clone()
+	for _, p := range paths {
+		mat2.Set(p.I, p.J, int('O'))
+	}
+	solution := mat2.Reduce(isSeat, 0)
 	log.Println("The solution is:", solution)
 }
