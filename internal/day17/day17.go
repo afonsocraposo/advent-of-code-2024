@@ -4,12 +4,15 @@ import (
 	"fmt"
 	"log"
 	"regexp"
+	"slices"
 	"strconv"
 	"strings"
 
 	"github.com/afonsocraposo/advent-of-code-2024/internal/utils/filereader"
 	"github.com/afonsocraposo/advent-of-code-2024/internal/utils/numbers"
 )
+
+const DEBUG = false
 
 var numPattern = regexp.MustCompile(`\d+`)
 
@@ -144,17 +147,63 @@ func part1() {
 }
 
 func part2() {
-	f := filereader.NewFromDayExample(17, 1)
-	lines := []string{}
+	f := filereader.NewFromDayInput(17, 1)
+	i := 0
+	var B, C = 0, 0
+	var program []int
 	for f.HasMore() {
 		line, _, err := f.Read()
 		if err != nil {
 			log.Fatalln(err)
 		}
 
-		lines = append(lines, line)
+		matches := numPattern.FindAllString(line, -1)
+		switch i {
+		case 1:
+			value, err := strconv.Atoi(matches[0])
+			if err != nil {
+				log.Fatalln(err)
+			}
+			B = value
+		case 2:
+			value, err := strconv.Atoi(matches[0])
+			if err != nil {
+				log.Fatalln(err)
+			}
+			C = value
+		case 4:
+			program = make([]int, len(matches))
+			for index, match := range matches {
+				value, err := strconv.Atoi(match)
+				if err != nil {
+					log.Fatalln(err)
+				}
+				program[index] = value
+			}
+		}
+		i++
 	}
 
-	solution := 0
+	var output []int
+	A := 0
+	d := 1
+	for true {
+		output = runProgram(program, A, B, C)
+		bitstring := strconv.FormatInt(int64(A), 2)
+		if DEBUG {
+			fmt.Println(A, bitstring, program, output)
+		}
+		if slices.Equal(program, output) || len(output) > len(program) {
+			break
+		}
+		if output[len(output)-d] == program[len(program)-d] && (d < 2 || output[len(output)-d+1] == program[len(program)-d+1]) {
+			d++
+			A = A << 3
+		} else {
+			A++
+		}
+	}
+
+	solution := A
 	log.Println("The solution is:", solution)
 }

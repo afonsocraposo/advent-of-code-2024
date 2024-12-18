@@ -40,6 +40,13 @@ func PrintMatrix(mat matrix.Matrix, redraw bool, framerate int) {
 	handleAnimation(framerate)
 }
 
+func PrintString(text string, redraw bool) {
+	if redraw {
+		fmt.Printf("\033[%dA", 1)
+	}
+	fmt.Println(text)
+}
+
 func PrintRuneMatrix(mat matrix.Matrix, title string, redraw bool, framerate int) {
 	m, n := mat.Size()
 	if redraw {
@@ -49,9 +56,9 @@ func PrintRuneMatrix(mat matrix.Matrix, title string, redraw bool, framerate int
 			fmt.Printf("\033[%dA", m+2)
 		}
 	}
-    if title != "" {
-        fmt.Println(title)
-    }
+	if title != "" {
+		fmt.Println(title)
+	}
 	for i, vector := range mat.Rows {
 		if i == 0 {
 			printLine(n + 2)
