@@ -1,8 +1,14 @@
 package point
 
+import "fmt"
+
 type Point struct {
 	I int
 	J int
+}
+
+func NewPoint(i int, j int) Point {
+	return Point{I: i, J: j}
 }
 
 func (p *Point) InsideBounds(iMin int, jMin int, iMax int, jMax int) bool {
@@ -23,11 +29,15 @@ func (p *Point) Clone() Point {
 }
 
 func (p *Point) Equal(p2 Point) bool {
-    return p.I == p2.I && p.J == p2.J
+	return p.I == p2.I && p.J == p2.J
 }
 
 func (p *Point) Symmetric() Point {
 	return Point{I: -p.I, J: -p.J}
+}
+
+func (p *Point) Hash() string {
+    return fmt.Sprintf("%d:%d", p.I, p.J)
 }
 
 type Direction Point

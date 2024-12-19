@@ -1,5 +1,7 @@
 package queue
 
+import "github.com/afonsocraposo/advent-of-code-2024/internal/utils/point"
+
 type PriorityQueue struct {
 	Queue []PriorityQueueElement
 }
@@ -35,4 +37,17 @@ func NewPriorityQueue() PriorityQueue {
 
 type PriorityQueueElement interface {
 	Value() int
+}
+
+type PositionPriorityQueueElement struct {
+	value     int
+	Position  point.Point
+}
+
+func NewPositionPriorityQueueElement(value int, position point.Point) PositionPriorityQueueElement {
+    return PositionPriorityQueueElement{value, position}
+}
+
+func (el PositionPriorityQueueElement) Value() int {
+	return el.value
 }

@@ -3,6 +3,8 @@ package matrix
 import (
 	"errors"
 	"fmt"
+
+	"github.com/afonsocraposo/advent-of-code-2024/internal/utils/point"
 )
 
 type Matrix struct {
@@ -237,6 +239,10 @@ func (matrix *Matrix) Clone() Matrix {
 
 func (matrix *Matrix) Set(i int, j int, value int) {
 	matrix.Rows[i].Set(j, value)
+}
+
+func (matrix *Matrix) SetPoint(p point.Point, value int ) {
+    matrix.Set(p.I, p.J, value)
 }
 
 func (matrix *Matrix) PrintText() {
