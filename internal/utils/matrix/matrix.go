@@ -164,6 +164,10 @@ func (matrix *Matrix) Get(i int, j int) (int, error) {
 	return matrix.Rows[i].Get(j), nil
 }
 
+func (matrix *Matrix) GetPoint(p point.Point) (int, error) {
+    return matrix.Get(p.I, p.J)
+}
+
 func (matrix1 *Matrix) PatternMatch(matrix2 Matrix, mask Matrix) Matrix {
 	m1, n1 := matrix1.Size()
 	m2, n2 := matrix2.Size()

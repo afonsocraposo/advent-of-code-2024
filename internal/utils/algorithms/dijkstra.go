@@ -1,6 +1,8 @@
 package algorithms
 
 import (
+	"slices"
+
 	"github.com/afonsocraposo/advent-of-code-2024/internal/utils/matrix"
 	"github.com/afonsocraposo/advent-of-code-2024/internal/utils/point"
 	"github.com/afonsocraposo/advent-of-code-2024/internal/utils/queue"
@@ -69,6 +71,7 @@ func FindMazePath(mat matrix.Matrix,start point.Point, end point.Point, wallValu
 	for _, p := range path {
 		mat2.Set(p.I, p.J, int('O'))
 	}
+    slices.Reverse(path)
 
 	return cost, path
 }
