@@ -10,6 +10,7 @@ import (
 	"github.com/afonsocraposo/advent-of-code-2024/internal/day16"
 	"github.com/afonsocraposo/advent-of-code-2024/internal/day17"
 	"github.com/afonsocraposo/advent-of-code-2024/internal/day18"
+	"github.com/afonsocraposo/advent-of-code-2024/internal/day19"
 	"log"
 	"os"
 	"strconv"
@@ -27,6 +28,7 @@ import (
 )
 
 var days = map[int]func(){
+	19: day19.Main,
 	17: day17.Main,
 	18: day18.Main,
 	16: day16.Main,
