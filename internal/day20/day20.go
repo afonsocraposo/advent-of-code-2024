@@ -42,7 +42,8 @@ func part1() {
 			}
 		}
 	}
-	cost, path := algorithms.FindMazePath(mat, start, end, int('#'))
+	cost, paths := algorithms.FindMazePath(mat, start, end, int('#'))
+    path := paths[0]
 
 	costFromPoint := map[string]int{}
 	for i, p := range path {
@@ -116,7 +117,8 @@ func part2() {
 			}
 		}
 	}
-	cost, path := algorithms.FindMazePath(mat, start, end, int('#'))
+	cost, paths := algorithms.FindMazePath(mat, start, end, int('#'))
+    path := paths[0]
 
 	costFromPoint := map[string]int{}
 	for i, p := range path {
