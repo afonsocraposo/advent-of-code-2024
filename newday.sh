@@ -19,56 +19,9 @@ touch "internal/day$DAY/day${DAY}.go" "puzzles/day$DAY/example1.txt" "puzzles/da
 
 # Populate the Go file with a template if it doesn't exist
 if [ -z "$ALREADY_EXISTS" ]; then
-cat > "internal/day$DAY/day${DAY}.go" << EOM
-package day$DAY
-
-import (
-	"log"
-	"github.com/afonsocraposo/advent-of-code-${year}/internal/utils/filereader"
-)
-
-func Main() {
-	log.Println("DAY $DAY")
-
-	log.Println("Part 1:")
-	part1()
-
-	log.Println("Part 2:")
-	part2()
-}
-
-func part1() {
-	f := filereader.NewFromDayExample($DAY, 1)
-	lines := []string{}
-	for f.HasMore() {
-		line, _, err := f.Read()
-		if err != nil {
-			log.Fatalln(err)
-		}
-
-		lines = append(lines, line)
-	}
-
-	solution := 0
-	log.Println("The solution is:", solution)
-}
-
-func part2() {
-	f := filereader.NewFromDayExample($DAY, 1)
-	lines := []string{}
-	for f.HasMore() {
-		line, _, err := f.Read()
-		if err != nil {
-			log.Fatalln(err)
-		}
-
-		lines = append(lines, line)
-	}
-
-	solution := 0
-	log.Println("The solution is:", solution)
-}
-EOM
+NEW_DAY="internal/day$DAY/day${DAY}.go"
+cp internal/day00/day00.go $NEW_DAY
+sed -i "" "s/00/${DAY}/g" $NEW_DAY
 
 # Format the Go file
 gofmt -w "internal/day$DAY/day${DAY}.go"
