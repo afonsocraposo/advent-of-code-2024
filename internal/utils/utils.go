@@ -18,3 +18,14 @@ func WaitForKeyPress() {
 	}
 	fmt.Print("\033[F\033[K") // Clear the "Press Enter" message
 }
+
+func HashValues(args ...int) string {
+	h := ""
+	for i, v := range args {
+		if i > 0 {
+			h += ":"
+		}
+		h += fmt.Sprintf("%d", v)
+	}
+	return h
+}
