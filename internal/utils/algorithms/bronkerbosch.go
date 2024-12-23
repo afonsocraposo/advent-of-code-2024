@@ -22,22 +22,22 @@ func bronKerbosch(R, P, X set.Set, graph map[string]set.Set, cliques *[]set.Set)
 	// iterate through all possible nodes
 	for v := range P {
 		bronKerbosch(R.Union(set.NewSet(v)), P.Intersection(graph[v]), X.Intersection(graph[v]), graph, cliques)
-        P.Remove(v)
-        X.Add(v)
+		P.Remove(v)
+		X.Add(v)
 	}
 }
 
 func LargestClique(graph map[string]set.Set) set.Set {
-    cliques := []set.Set{}
-    bronKerbosch(set.Set{}, set.NewSet(mapp.GetMapKeys(graph)...), set.Set{}, graph, &cliques)
-    var maxSet set.Set
-    maxLen := 0
-    for _, s := range cliques {
-        l := len(s)
-        if l > maxLen {
-            maxLen = l
-            maxSet = s
-        }
-    }
-    return maxSet
+	cliques := []set.Set{}
+	bronKerbosch(set.Set{}, set.NewSet(mapp.GetMapKeys(graph)...), set.Set{}, graph, &cliques)
+	var maxSet set.Set
+	maxLen := 0
+	for _, s := range cliques {
+		l := len(s)
+		if l > maxLen {
+			maxLen = l
+			maxSet = s
+		}
+	}
+	return maxSet
 }
