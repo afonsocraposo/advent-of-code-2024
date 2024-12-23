@@ -15,7 +15,7 @@ mkdir -p "internal/day$DAY" "puzzles/day$DAY"
 ALREADY_EXISTS=$(ls internal/day$DAY 2>/dev/null)
 
 # Create files with safety checks
-touch "internal/day$DAY/day${DAY}.go" "puzzles/day$DAY/example1.txt" "puzzles/day$DAY/input1.txt"
+touch "internal/day$DAY/day${DAY}.go" "puzzles/day$DAY/example1.txt" "puzzles/day$DAY/example1.solution1.txt" "puzzles/day$DAY/input1.txt"
 
 # Populate the Go file with a template if it doesn't exist
 if [ -z "$ALREADY_EXISTS" ]; then
