@@ -1,6 +1,10 @@
 # Advent of Code 2024 🎄✨
 ```
-         ,_---~~~~~----._         
+     Merry Christmas!
+ ------------------------
+   \
+    \
+     \   ,_---~~~~~----._         
   _,,_,*^____      _____``*g*\"*, 
  / __/ /'     ^.  /      \ ^@q   f 
 [  @f | @))    |  | @))   l  0 _/  
@@ -10,7 +14,7 @@
   ]            | | |            |  
   ]             ~ ~             |  
   |                            |   
-   |                           |  
+   |                           |   
 ```
 
 Welcome to **Advent of Code 2024**! 🎅✨ This repo features my solutions to the daily programming puzzles, written in **Golang**, with a clean architecture for festive coding!
