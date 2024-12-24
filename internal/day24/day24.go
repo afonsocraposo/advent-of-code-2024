@@ -11,7 +11,7 @@ import (
 
 const day = 24
 
-var examples = []int{1}
+var examples = []int{1, 2}
 
 func Main() {
 	log.Printf("DAY %d\n", day)
@@ -130,6 +130,35 @@ func part1(lines []string) string {
 }
 
 func part2(lines []string) string {
-	solution := 0
-	return fmt.Sprintf("%d", solution)
+	operations := []string{}
+	wiresPart := true
+	for _, line := range lines {
+		if line == "" {
+			wiresPart = false
+			continue
+		}
+		if !wiresPart {
+			operations = append(operations, line)
+		}
+	}
+
+	slices.Sort(operations)
+
+	mermaid := "\nflowchart-elk TD\n"
+
+	for i, operation := range operations {
+		m := instructionPattern.FindAllStringSubmatch(operation, -1)
+		if len(m) == 0 {
+			log.Fatalln("Something wrong with the instructionPattern")
+		}
+		a := m[0][1]
+		o := m[0][2]
+		b := m[0][3]
+		c := m[0][4]
+		mermaid += fmt.Sprintf("%s{%s} --> O%d[%s]\n", a, a, i, o)
+		mermaid += fmt.Sprintf("%s{%s} --> O%d[%s]\n", b, b, i, o)
+		mermaid += fmt.Sprintf("O%d[%s] --> %s{%s}\n", i, o, c, c)
+	}
+	fmt.Println(mermaid)
+	return mermaid
 }

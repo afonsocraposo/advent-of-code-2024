@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/afonsocraposo/advent-of-code-2024/internal/day11"
 	"github.com/afonsocraposo/advent-of-code-2024/internal/day12"
 	"github.com/afonsocraposo/advent-of-code-2024/internal/day13"
@@ -62,7 +61,7 @@ var days = map[int]func(){
 func main() {
 	log.SetFlags(0)
 
-	fmt.Println("Advent of Code 2024")
+	log.Println("Advent of Code 2024")
 
 	args := os.Args[1:]
 
