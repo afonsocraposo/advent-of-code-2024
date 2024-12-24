@@ -35,7 +35,7 @@ func Main() {
 
 			exampleSolution := partMethod(exampleLines)
 			if exampleSolution != expectedSolution {
-				log.Printf("WRONG solution for example %d. Expected: %s, Actual: %s\n", example, expectedSolution, exampleSolution)
+				log.Fatalf("WRONG solution for example %d. Expected: %s, Actual: %s\n", example, expectedSolution, exampleSolution)
 			} else {
 				log.Printf("The solution is CORRECT for example %d. Expected/actual: %s\n", example, exampleSolution)
 			}
