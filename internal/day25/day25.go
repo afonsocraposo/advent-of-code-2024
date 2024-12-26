@@ -120,32 +120,5 @@ func part1(lines []string) string {
 }
 
 func part2(lines []string) string {
-
-	buffer := []string{}
-	locks := [][]int{}
-	keys := [][]int{}
-	for i, line := range lines {
-		if line == "" || i == len(lines)-1 {
-			mat := matrix.ParseRuneMatrix(buffer)
-			heights := getHeights(mat)
-			if isLock(mat) {
-				locks = append(locks, heights)
-			} else {
-				keys = append(keys, heights)
-			}
-			buffer = []string{}
-		} else {
-			buffer = append(buffer, line)
-		}
-	}
-
-	solution := 0
-	for _, key := range keys {
-		for _, lock := range locks {
-			if keyFitsLock(key, lock) {
-				solution++
-			}
-		}
-	}
-	return fmt.Sprintf("%d", solution)
+	return "Merry Christmas"
 }
